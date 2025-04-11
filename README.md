@@ -1,38 +1,116 @@
-# sv
+# Svelte InteractJS
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+A modern SvelteKit application demonstrating the integration of interact.js for creating draggable and resizable elements using Svelte 5's new reactivity system.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- **Draggable Elements**: Easily create draggable components with position tracking
+- **Resizable Elements**: Add resizable functionality to any component
+- **Svelte 5 Integration**: Utilizes Svelte 5's new reactivity system with `$state` and `$effect`
+- **TypeScript Support**: Fully typed for better developer experience
+- **Tailwind CSS 4.0**: Modern styling with the latest Tailwind features
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v18+)
+- npm, pnpm, or yarn
+
+### Installation
 
 ```bash
-# create a new project in the current directory
-npx sv create
+# Clone the repository
+git clone https://github.com/quang-design/svelte-interactjs.git
+cd svelte-interactjs
 
-# create a new project in my-app
-npx sv create my-app
+# Install dependencies
+npm install
+# or
+pnpm install
+# or
+yarn install
 ```
 
-## Developing
+### Development
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Start the development server:
 
 ```bash
 npm run dev
 
-# or start the server and open the app in a new browser tab
+# Or start the server and open the app in a new browser tab
 npm run dev -- --open
 ```
 
-## Building
+### Building for Production
 
-To create a production version of your app:
+Create a production build:
 
 ```bash
 npm run build
 ```
 
-You can preview the production build with `npm run preview`.
+Preview the production build:
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+```bash
+npm run preview
+```
+
+## Usage Example
+
+```svelte
+<script lang="ts">
+  import interact from 'interactjs';
+  import type { Action } from 'svelte/action';
+
+  // Use Svelte 5's reactive state
+  const position = $state({ x: 0, y: 0 });
+
+  // Create a Svelte action for draggable functionality
+  const draggable: Action<HTMLDivElement> = (node) => {
+    // Implementation details...
+    
+    $effect(() => {
+      const interaction = interact(node)
+        .draggable({
+          // Draggable options...
+        })
+        .resizable({
+          // Resizable options...
+        });
+
+      return () => {
+        interaction.unset();
+      };
+    });
+  };
+</script>
+
+<div use:draggable class="your-styling-here">
+  Draggable and Resizable Element
+</div>
+```
+
+## Project Structure
+
+- `src/routes/` - SvelteKit routes
+- `src/lib/` - Reusable components and utilities
+- `static/` - Static assets
+
+## Technologies
+
+- [SvelteKit](https://kit.svelte.dev/) - Full-stack Svelte framework
+- [Svelte 5](https://svelte.dev/) - Component framework with runes
+- [interact.js](https://interactjs.io/) - JavaScript drag and drop, resizing, and multi-touch gestures
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS 4.0](https://tailwindcss.com/) - Utility-first CSS framework
+
+## License
+
+MIT
+
+## Acknowledgements
+
+- [interact.js Documentation](https://interactjs.io/docs/)
+- [Svelte 5 Documentation](https://svelte.dev/docs/runes)
