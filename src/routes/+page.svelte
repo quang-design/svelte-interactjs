@@ -13,6 +13,9 @@
 		$effect(() => {
 			const interaction = interact(node)
 				.draggable({
+					inertia: {
+						resistance: 50
+					},
 					listeners: {
 						start(event) {
 							console.log(event.type, event.target, $state.snapshot(position));
@@ -30,6 +33,12 @@
 				})
 				.resizable({
 					edges: { top: true, left: true, right: true, bottom: true },
+					invert: 'none',
+					inertia: {
+						resistance: 30,
+						minSpeed: 200,
+						endSpeed: 100
+					},
 					listeners: {
 						move: function (event) {
 							position.x += event.deltaRect.left;
@@ -49,6 +58,7 @@
 			};
 		});
 	};
+
 	$inspect(position);
 </script>
 
